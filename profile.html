@@ -1,0 +1,412 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Anti-drug</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+    <link href="css/model.css" rel="stylesheet" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+ 
+/* The Close Button (x) */
+.close {
+    position: relative;
+    right: -95%;
+    top: 0px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #000;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+       width: 100%;
+    }
+}
+</style>
+</head>
+  
+<script>
+  
+
+ $(document).ready(function()
+{  
+   $("#pwdrl").hide();
+   $("#pwdr").hide();
+   $("#pwd").hide();
+   $("#em").hide();
+   $("#chbtn").hide();
+   $("#delbtn").hide();
+   var username=localStorage.getItem("mylogin");
+  // alert(username);
+   
+   
+  
+    $.ajax(
+				{
+					/*url: "http://port-9000.305server-idm4smb32469.codeanyapp.com/Login", */
+					url: "https://mean-manloktse266881.codeanyapp.com/getprofile",
+					type: 'POST',
+					data: username,
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+          // alert(resultReturn);
+					//	alert(JSON.stringify(resultReturn));
+			      var _stringObj = JSON.stringify(resultReturn);
+			      var stringObj = JSON.parse(resultReturn);
+				//  alert(stringObj.length);
+			      for(i = 0; i < stringObj.length; i++)
+            {
+					    var num = i + 1;
+         //     alert(stringObj[i].name)
+              $("#uname").text(stringObj[i].name);
+              $("#uem").text(stringObj[i].email);
+					    $("#upwd").text(stringObj[i].password);
+				     }
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("search failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+   
+   //signout
+    $("#signOut").click(function()
+	{
+		//alert("callnow");
+	
+	
+       
+				$.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/signout", 
+					type: 'POST',
+					
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+           //alert(resultReturn);
+            if(resultReturn=="1"){
+              localStorage.setItem("mylogin","");
+              window.location.href="/index";
+              
+              alert("Bye~ ");
+            }else{
+               alert("illegal login");
+              return;
+            }
+            
+            
+						//alert(JSON.stringify(resultReturn));
+			     
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+			
+   });
+	// handle button clicks  
+    $("#edbtn").click(function()
+	{
+      
+     
+      var tempemail=$("#uem").text();
+      var tempepwd=$("#upwd").text();
+     $("#em").val(tempemail);
+      $("#pwd").val(tempepwd);
+      $("#pwdr").val(tempepwd);
+      $("#pwdrl").show();
+      $("#pwdr").show();
+      $("#pwd").show();
+      $("#em").show();
+      $("#chbtn").show();
+      $("#edbtn").hide();
+      $("#uem").hide();
+      $("#upwd").hide();
+      $("#pwd").val();
+    });
+    //alert("abc")
+  $("#chbtn").click(function()
+	{
+	//	alert("callnow");
+	
+  var password=$("#pwd").val(); 
+  var repassword=$("#pwdr").val();
+  var email=$("#em").val();
+		if(password == ""|repassword=="")
+			{
+				alert("Please fill the field.");
+			}
+    else if(password!=repassword){
+        alert("invalid password!");
+        alert(password);
+        alert(repassword);
+      
+    }
+		else
+			{
+      //  var go=$("#searchkey").val();
+        var mydata="uname="+username+"&pwd="+password+"&em="+email;
+				$.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/profile", 
+					type: 'POST',
+					data: mydata,
+					success: function(resultReturn)
+					{ 
+						alert("search success");
+          
+            if(resultReturn=="1"){
+              window.location.href="/profile";
+              
+              alert("change");
+            }
+
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+			}
+   });
+   //delect account
+   $("#delbtn").click(function()
+	{
+	//	alert("callnow");
+	
+ 
+		
+      //  var go=$("#searchkey").val();
+        var mydata=username;
+				$.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/delacc", 
+					type: 'POST',
+					data: mydata,
+					success: function(resultReturn)
+					{ 
+					//	alert("search success");
+          
+            if(resultReturn=="1"){
+              window.location.href="/index";
+              localStorage.setItem("mylogin","");
+              alert("delected");
+            }
+
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+			
+   });
+});
+  
+
+</script>
+<body>
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <img class="logo" src="antiDrug.jpg" alt="">
+        <a class="navbar-brand js-scroll-trigger" href="/index">Anti-drug</a>
+        
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            
+           
+           
+            <li class="nav-item mx-0 mx-lg-1" id="siout">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="signOut">Sign out</a>
+            </li>
+           <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="temperature"></a>
+            </li>
+            
+             
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+   
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/freelancer.js"></script>
+
+<div class="modal-content" >
+    <div class="container">
+    
+      <h1>Profile</span></span> </h1>
+      <p>Here is your account.</p>
+      <hr>
+      <label for="username"><b>User Name</b></label>
+      <p id="uname"></p>
+      <label for="email"><b>Email</b></label>
+      <p id="uem"></p>
+      <input type="text" placeholder="Enter Email" id="em" >
+      
+     
+      
+      <label for="psw"><b>Password</b></label>
+      <p id="upwd"></p>
+      <input type="password" placeholder="Enter Password" id="pwd">
+      
+             
+      <label for="psw-repeat" id="pwdrl"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" id="pwdr">
+    
+
+      <div class="clearfix">
+        <a href="/index"><button type="button" class="cancelbtn"> Back to index</button></a>
+       <button type="submit" class="signupbtn" id="edbtn">Change profile</button>
+        <button type="submit" class="signupbtn" id="delbtn">Delect Account</button>
+        <button type="submit" class="signupbtn" id="chbtn">Save</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body>
+</html>

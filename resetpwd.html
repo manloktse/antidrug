@@ -1,0 +1,312 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Anti-drug</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+    <link href="css/model.css" rel="stylesheet" type="text/css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* Add a background color when the inputs get focus */
+input[type=text]:focus, input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+button:hover {
+    opacity:1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    padding: 14px 20px;
+    background-color: #f44336;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #474e5d;
+    padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+}
+ 
+/* The Close Button (x) */
+.close {
+    position: relative;
+    right: -95%;
+    top: 0px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #000;
+}
+
+.close:hover,
+.close:focus {
+    color: #f44336;
+    cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+       width: 100%;
+    }
+}
+</style>
+</head>
+  
+<script>
+  
+
+ $(document).ready(function()
+{  
+  
+   //temperature api
+   $.ajax({
+				url : "https://api.wunderground.com/api/b20b6bbf1fd069a8/geolookup/conditions/q/HK/HongKong.json",
+				dataType : "jsonp",
+				success : function(parsed_json) {
+          
+					var temp_c = parsed_json['current_observation']['temp_c'];
+					document.getElementById("temperature").innerHTML = temp_c + "&deg;C";
+				}
+				});
+  // alert(username);
+   
+   var tempMsg=location.search;
+   if(tempMsg==""){
+     window.location.href="/index";
+   }
+   var splitMsg = tempMsg.split("&");
+	var tempSplitID = splitMsg[0];
+   var tempSplitKey = splitMsg[1];
+   var tempID = tempSplitID.split("=");
+   var tempKey = tempSplitKey.split("=");
+  $.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/resetpwdchk", 
+					type: 'POST',
+					data: tempMsg,
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+          
+            if(resultReturn=="0"){
+              window.location.href="/index";
+              
+              alert("invalid link");
+            }
+
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+  
+   
+   
+	// handle button clicks  
+  
+  $("#chbtn").click(function()
+	{
+	//	alert("callnow");
+	
+  var password=$("#pwd").val(); 
+  var repassword=$("#pwdr").val();
+ 
+		if(password == ""|repassword=="")
+			{
+				alert("Please fill the field.");
+			}
+    else if(password!=repassword){
+        alert("invalid password!");
+      
+    }
+		else
+			{
+      //  var go=$("#searchkey").val();
+        var mydata="keyID="+tempID[1]+"&pwd="+password;
+				$.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/resetpwd", 
+					type: 'POST',
+					data: mydata,
+					success: function(resultReturn)
+					{ 
+						alert("search success");
+          
+            if(resultReturn=="1"){
+              window.location.href="/index";
+              
+              alert("changed");
+            }
+
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+			}
+   });
+});
+</script>
+<body>
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <img class="logo" src="antiDrug.jpg" alt="">
+        <a class="navbar-brand js-scroll-trigger" href="/index">Anti-drug</a>
+        
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            
+           
+           
+            
+           <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="temperature"></a>
+            </li>
+            
+             
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+   
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/freelancer.js"></script>
+
+<div class="modal-content" >
+    <div class="container">
+    
+      <h1>Reset you password</span></span> </h1>   
+         
+           
+      <label for="psw"><b>Password</b></label>
+      
+      <input type="password" placeholder="Enter Password" id="pwd">
+      
+             
+     
+      <input type="password" placeholder="Repeat Password" id="pwdr">
+    
+
+      <div class="clearfix">
+        <a href="/index"><button type="button" class="cancelbtn"> Back to index</button></a>
+        <button type="submit" class="signupbtn" id="chbtn">Change Password</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body>
+</html>

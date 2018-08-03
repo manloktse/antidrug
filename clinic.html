@@ -1,0 +1,1097 @@
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Anti-drug</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/freelancer.min.css" rel="stylesheet">
+    <link href="css/model.css" rel="stylesheet" type="text/css">
+
+
+   
+  </head>
+<style>
+   
+    #fblogin{background-color:#3b5998}
+  
+  .access {position:absolute; left:0px; top:-500px; width:1px; height:1px; overflow:hidden;} 
+  .content_table_hd{
+	color:#ffffff;
+	font-weight:bold;
+	text-align:center;
+	line-height:2em;	
+}
+ .table_hd{ background-color:#007D64; }
+.table_hd td{ background-color:#007D64; }
+.table_hd span { color:#FFFFFF;background-color:transparent;}
+.table_row_odd { background-color:#d9ece6 }
+.table_row_even { background-color:#c3e2d8 }
+  
+    
+#myInput {
+  background-image: url('/img/search.png');
+  background-position: 3px 3px;
+  background-repeat: no-repeat;
+  width: 30%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+  </style>
+
+  <script>
+   function showPassword() {
+    var x = document.getElementById("pwd");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+  
+ $(document).ready(function()
+{  
+   // initialize and setup facebook js sdk
+		window.fbAsyncInit = function() {
+		    FB.init({
+		      appId      : '807757329395025',
+		      xfbml      : true,
+		      version    : 'v2.5'
+		    });
+		    FB.getLoginStatus(function(response) {
+		    	if (response.status === 'connected') {
+		    		//document.getElementById('status').innerHTML = 'We are connected.';
+		    
+		    	} else if (response.status === 'not_authorized') {
+		    //		document.getElementById('status').innerHTML = 'We are not logged in.'
+		    	} else {
+		    //		document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+         
+		    	}
+		    });
+		};
+		(function(d, s, id){
+		    var js, fjs = d.getElementsByTagName(s)[0];
+		    if (d.getElementById(id)) {return;}
+		    js = d.createElement(s); js.id = id;
+		    js.src = "//connect.facebook.net/en_US/sdk.js";
+		    fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+   
+//   includeHTML();
+   var modal1 = document.getElementById('id01');
+   var modal2 = document.getElementById('id02');
+window.onclick = function(event) {
+  
+    if (event.target == modal1) {
+      
+      modal1.style.display = "none";
+      
+    }
+  if (event.target == modal2) {
+      
+      modal2.style.display = "none";
+      
+    }
+    
+}
+   $("#siup").hide();
+   $("#siin").hide();
+   $("#siout").hide();
+   var ustatus=localStorage.getItem("mystatus")
+            
+	var checkdata="user="+localStorage.getItem("mylogin")
+  //restore favicon
+  $.ajax(
+				{
+					/*url: "http://port-9000.305server-idm4smb32469.codeanyapp.com/Login", */
+					url: "https://mean-manloktse266881.codeanyapp.com/readfavourlist",
+					type: 'POST',
+					data: checkdata,
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+           //alert(resultReturn);
+						//alert(JSON.stringify(resultReturn));
+			      var _stringObj = JSON.stringify(resultReturn);
+			      var stringObj = JSON.parse(resultReturn);
+				 // alert(stringObj.length);
+			      for(i = 0; i < stringObj.length; i++)
+            {
+					    var num = i + 1;
+              var favicon= stringObj[i].favouriteID
+					    //alert(favicon);
+              $("#"+favicon).attr("class","fa fa-star");
+              $("#"+favicon).attr("style","font-size:36px;color:yellow");
+				     }
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("search failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+
+  
+
+
+
+ 
+// //        
+		
+          var logst=false;
+          $.ajax(
+				{
+					/*url: "http://port-9000.305server-idm4smb32469.codeanyapp.com/Login", */
+					url: "https://mean-manloktse266881.codeanyapp.com/checkstatus",
+					type: 'POST',
+					
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+       //    alert(resultReturn);
+           if(resultReturn==0){
+             localStorage.setItem("mylogin","");
+             logst=false;
+            $("#siup").show();
+             $("#siin").show();
+             
+           }
+            else{
+              logst=true;
+              $("#siout").show();
+            }
+					  
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("search failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+         $.ajax({
+				url : "https://api.wunderground.com/api/b20b6bbf1fd069a8/geolookup/conditions/q/HK/HongKong.json",
+				dataType : "jsonp",
+				success : function(parsed_json) {
+          
+					var temp_c = parsed_json['current_observation']['temp_c'];
+					document.getElementById("temperature").innerHTML = temp_c + "&deg;C";
+				}
+				});
+   
+   
+   //header
+  $("#loginbtn").click(function()
+	{
+		//alert("callnow");
+	var username=$("#uname").val();
+  var password=$("#pwd").val();  
+		if(username== ""|password == "")
+			{
+				alert("Please fill the field.");
+			}
+		else
+			{
+      //  var go=$("#searchkey").val();
+        var mydata="uname="+username+"&pwd="+password;
+				$.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/login", 
+					type: 'POST',
+					data: mydata,
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+           //alert(resultReturn);
+            if(resultReturn=="1"){
+              window.location.href="/clinic";
+              localStorage.setItem("mylogin",username);
+              alert("hi  "+ username);
+            }else{
+               alert("illegal login");
+              return;
+            }
+            
+            
+						//alert(JSON.stringify(resultReturn));
+			      var _stringObj = JSON.stringify(resultReturn);
+			      var stringObj = JSON.parse(resultReturn);
+			      for(i = 0; i < stringObj.length; i++)
+            {
+					    var num = i + 1;
+					    document.getElementsByClassName("tabnum")[i].innerHTML = num;
+					    document.getElementsByClassName("tabname")[i].innerHTML = stringObj[i].texttitle;
+				      document.getElementsByClassName("tablink")[i].innerHTML = stringObj[i].command;
+				     }
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+			}
+   });
+   //signout
+     $("#signOut").click(function()
+	{
+		//alert("callnow");
+	  
+	      if(ustatus!=""){
+           $.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/fbstatus", 
+					type: 'POST',
+          data: "logout",
+					
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+           //alert(resultReturn);
+            if(resultReturn=="0"){
+              localStorage.setItem("mylogin","");
+              localStorage.setItem("mystatus","");
+              FB.logout(function(response){
+                
+               })
+              window.location.href="/index";
+              
+              alert("Bye~ ");
+            }else{
+               alert("illegal login");
+              return;
+            }
+            
+            
+						//alert(JSON.stringify(resultReturn));
+			     
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+        }else{
+           $.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/signout", 
+					type: 'POST',
+					
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+           //alert(resultReturn);
+            if(resultReturn=="1"){
+              localStorage.setItem("mylogin","");
+              window.location.href="/index";
+              localStorage.setItem("mystatus","");
+              alert("Bye~ ");
+            }else{
+               alert("illegal login");
+              return;
+            }
+            
+            
+						//alert(JSON.stringify(resultReturn));
+			     
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+           
+        }
+       
+				
+			
+   });
+//signup
+     $("#msg1").hide();
+   $("#msg2").hide();
+   var userState=false;
+   var emailState=false;
+   // handle button clicks  
+    //alert("abc")
+  $("#siuname").keyup(function(){
+        
+    var mydata=$("#siuname").val();
+    if ( mydata== '') {
+  	userState = false;
+    $("#msg1").hide();
+  	return;
+  }
+    else{      
+    
+    $.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/namecheck", 
+					type: 'POST',
+					data: mydata,
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+          
+            if(resultReturn=="taken"){
+              //alert("exsiting user");
+              userState=false;
+               $("#msg1").show();
+              
+            }
+            else {
+              userState=true;
+              $("#msg1").hide();
+            }
+						
+			     
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+    }
+  });
+   
+ $("#siem").keyup(function(){
+       
+    var mydata=$("#siem").val();
+  if ( mydata== '') {
+  	emailState = false;
+    $("#msg2").hide();
+  	return;
+  }
+  else{   
+  
+    $.ajax(
+				{
+					url: "https://mean-manloktse266881.codeanyapp.com/emailcheck", 
+					type: 'POST',
+					data: mydata,
+					success: function(resultReturn)
+					{ 
+						//alert("search success");
+          
+            if(resultReturn=="taken"){
+             // alert("exsiting user!");
+              emailState=false;
+              $("#msg2").show();
+            }else{
+              emailState=true;
+              $("#msg2").hide();
+             
+            }
+						
+			     
+					},error: function (xhr, textStatus, errorThrown) 
+					{
+						alert("login failed");
+						console.log(textStatus);
+            alert(xhr.responseText);
+      		}
+				});
+  }
+  });
+   
+   
+  $("#signbtn").click(function()
+	{
+		//alert("callnow");
+    
+      
+      var username=$("#siuname").val();
+      var password=$("#sipwd").val(); 
+      var repassword=$("#sipwdr").val();
+      var email=$("#siem").val();
+        if(username== ""|password == ""|repassword=="")
+          {
+            alert("Please fill the field.");
+          }
+        else if(password!=repassword){
+            alert("invalid password!");
+           
+        }
+        else if (userState == false || emailState == false){
+          alert("invalid data")
+        }
+        else
+          {
+          //  var go=$("#searchkey").val();
+            var mydata="uname="+username+"&pwd="+password+"&em="+email;
+            $.ajax(
+            {
+              url: "https://mean-manloktse266881.codeanyapp.com/signup", 
+              type: 'POST',
+              data: mydata,
+              success: function(resultReturn)
+              { 
+                //alert("search success");
+
+                if(resultReturn=="1"){
+                  window.location.href="/index";
+
+                  alert(username+",Please activate your account by email." );
+                }
+                //alert(JSON.stringify(resultReturn));
+                var _stringObj = JSON.stringify(resultReturn);
+                var stringObj = JSON.parse(resultReturn);
+                for(i = 0; i < stringObj.length; i++)
+                {
+                  var num = i + 1;
+                  document.getElementsByClassName("tabnum")[i].innerHTML = num;
+                  document.getElementsByClassName("tabname")[i].innerHTML = stringObj[i].texttitle;
+                  document.getElementsByClassName("tablink")[i].innerHTML = stringObj[i].command;
+                 }
+              },error: function (xhr, textStatus, errorThrown) 
+              {
+                alert("login failed");
+                console.log(textStatus);
+                alert(xhr.responseText);
+              }
+            });
+          }
+      
+    
+       });
+    //fb login
+    $("#fblogin").click(function()
+	{
+      
+     FB.login(function(response) {
+				if (response.status === 'connected') {
+		    //		document.getElementById('status').innerHTML = 'We are connected.Now!';
+         
+		    FB.api('/me', 'GET', {fields: 'first_name,last_name,name,id'}, function(response) {
+				 
+          var user = response.name;
+          localStorage.setItem("mylogin",user);
+          localStorage.setItem("mystatus","fblogin");
+          $.ajax(
+            {
+              url: "https://mean-manloktse266881.codeanyapp.com/fbstatus", 
+              type: 'POST',
+              data: "login",
+              success: function(resultReturn)
+              { 
+                //alert("search success");
+
+                if(resultReturn=="1"){
+                 // localStorage.setItem("mylogin",username);
+                  window.location.href="/clinic";
+                  alert("hi,"+ user)
+                 
+                }
+
+              },error: function (xhr, textStatus, errorThrown) 
+              {
+                alert("login failed");
+                console.log(textStatus);
+                alert(xhr.responseText);
+              }
+            });
+        });
+          
+		    	} else if (response.status === 'not_authorized') {
+		    //		document.getElementById('status').innerHTML = 'We are not logged in.'
+		    	} else {
+		   // 		document.getElementById('status').innerHTML = 'You are not logged into Facebook.';
+           
+		    	}
+			}, {scope: 'email'});
+      
+    })
+  //policy
+   $("#policy").click(function(){
+     window.open("https://privacypolicies.com/privacy/view/6e2019d02519dd755a908286d243de41 ", "", "width=400,height=500");
+   });
+// handle button clicks
+    $("#loginclick").click(function()
+	{
+      modal1.style.display ='block'
+      modal2.style.display = "none";
+    });
+   $("#signinclick").click(function()
+	{
+      modal2.style.display ='block'
+      modal1.style.display = "none";
+    });
+   
+         // alert(localStorage.getItem("mylogin"));
+         $("i").click(function(){
+           
+          
+
+      //fav    	
+                if(logst){
+                 
+                      var currentbutton=this.id;
+                  //alert (currentbutton)
+                      if($("#"+currentbutton).attr("class")=="fa fa-star-o"){
+                        $("#"+currentbutton).attr("class","fa fa-star");
+                        $("#"+currentbutton).attr("style","font-size:36px;color:yellow");
+                         var mydata="id="+localStorage.getItem("mylogin")+"&fav="+$("#"+currentbutton+"item").text()+"&favno="+currentbutton;
+                          $.ajax(
+                          {
+                            url: "https://mean-manloktse266881.codeanyapp.com/addfav", 
+                            type: 'POST',
+                            data: mydata,
+                            success: function(resultReturn)
+                            { 
+                             // alert("added");
+
+
+                              //alert(JSON.stringify(resultReturn));
+                              var _stringObj = JSON.stringify(resultReturn);
+                              var stringObj = JSON.parse(resultReturn);
+                              for(i = 0; i < stringObj.length; i++)
+                              {
+                                var num = i + 1;
+                                document.getElementsByClassName("tabnum")[i].innerHTML = num;
+                                document.getElementsByClassName("tabname")[i].innerHTML = stringObj[i].texttitle;
+                                document.getElementsByClassName("tablink")[i].innerHTML = stringObj[i].command;
+                               }
+                            },error: function (xhr, textStatus, errorThrown) 
+                            {
+                              alert("login failed");
+                              console.log(textStatus);
+                              alert(xhr.responseText);
+                            }
+                          });
+
+                      }
+                       else{
+                         $("#"+currentbutton).attr("class","fa fa-star-o");
+                        $("#"+currentbutton).attr("style","font-size:36px;color:dark");
+                          var mydata="id="+localStorage.getItem("mylogin")+"&fav="+$("#"+currentbutton+"item").text()+"&favno="+currentbutton;
+                          $.ajax(
+                          {
+                            url: "https://mean-manloktse266881.codeanyapp.com/defav", 
+                            type: 'POST',
+                            data: mydata,
+                            success: function(resultReturn)
+                            { 
+                         //     alert("removed");
+
+
+                              //alert(JSON.stringify(resultReturn));
+                              var _stringObj = JSON.stringify(resultReturn);
+                              var stringObj = JSON.parse(resultReturn);
+                              for(i = 0; i < stringObj.length; i++)
+                              {
+                                var num = i + 1;
+                                document.getElementsByClassName("tabnum")[i].innerHTML = num;
+                                document.getElementsByClassName("tabname")[i].innerHTML = stringObj[i].texttitle;
+                                document.getElementsByClassName("tablink")[i].innerHTML = stringObj[i].command;
+                               }
+                            },error: function (xhr, textStatus, errorThrown) 
+                            {
+                              alert("login failed");
+                              console.log(textStatus);
+                              alert(xhr.responseText);
+                            }
+                          });
+                       }
+            //            alert( $("#"+currentbutton+"item").text());
+
+               }
+           else{
+              alert("please login")
+        
+           }
+           });
+});
+</script>
+<!-- <script>
+function includeHTML() {
+  alert("try");
+  var z, i, elmnt, file, xhttp;
+  /*loop through a collection of all HTML elements:*/
+  z = document.getElementsByTagName("*");
+  for (i = 0; i < z.length; i++) {
+    elmnt = z[i];
+    /*search for elements with a certain atrribute:*/
+    file = elmnt.getAttribute("w3-include-html");
+    if (file) {
+      /*make an HTTP request using the attribute value as the file name:*/
+      xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {elmnt.innerHTML = this.responseText; alert("get")}
+
+          if (this.status == 404) {elmnt.innerHTML = "Page not found.";alert("notg et")}
+          /*remove the attribute, and call this function once more:*/
+          elmnt.removeAttribute("w3-include-html");
+          includeHTML();
+        }
+      }      
+      xhttp.open("GET", file, true);
+      xhttp.send();
+      /*exit the function:*/
+      return;
+    }
+  }
+};
+</script> -->
+  <script>
+function myFunction() {
+  var input, filter, table01, tr01, td01, table02, tr02,td02,table03, tr03,td03,table04, tr04,td04,table05, tr05,td05,table06, tr06,td06, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+ 
+    
+  table01 = document.getElementById("tb01");
+  tr01 = table01.getElementsByTagName("tr");
+  
+  for (i = 0; i < tr01.length; i++) {
+    td01 = tr01[i].getElementsByTagName("td")[0];
+    if (td01) {
+      if (td01.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr01[i].style.display = "";
+      } else {
+        tr01[i].style.display = "none";
+      }
+    }       
+  }
+  
+  table02 = document.getElementById("tb02");
+  tr02 = table02.getElementsByTagName("tr");
+  for (i = 0; i < tr02.length; i++) {
+    td02 = tr02[i].getElementsByTagName("td")[0];
+    if (td02) {
+      if (td02.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr02[i].style.display = "";
+      } else {
+        tr02[i].style.display = "none";
+      }
+    }
+  }
+    
+  table03 = document.getElementById("tb03");
+  tr03 = table03.getElementsByTagName("tr");
+  for (i = 0; i < tr03.length; i++) {
+    td03 = tr03[i].getElementsByTagName("td")[0];
+    if (td03) {
+      if (td03.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr03[i].style.display = "";
+      } else {
+        tr03[i].style.display = "none";
+      }
+    } 
+  }
+    
+    table04 = document.getElementById("tb04");
+  tr04 = table04.getElementsByTagName("tr");
+  for (i = 0; i < tr04.length; i++) {
+    td04 = tr04[i].getElementsByTagName("td")[0];
+    if (td04) {
+      if (td04.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr04[i].style.display = "";
+      } else {
+        tr04[i].style.display = "none";
+      }
+    } 
+  }
+    
+    table05 = document.getElementById("tb05");
+  tr05 = table05.getElementsByTagName("tr");
+  for (i = 0; i < tr05.length; i++) {
+    td05 = tr05[i].getElementsByTagName("td")[0];
+    if (td05) {
+      if (td05.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr05[i].style.display = "";
+      } else {
+        tr05[i].style.display = "none";
+      }
+    } 
+  }
+    
+    
+    table06 = document.getElementById("tb06");
+  tr06 = table06.getElementsByTagName("tr");
+  for (i = 0; i < tr06.length; i++) {
+    td06 = tr06[i].getElementsByTagName("td")[0];
+    if (td06) {
+      if (td06.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        tr06[i].style.display = "";
+      } else {
+        tr06[i].style.display = "none";
+      }
+    } 
+  }
+
+}
+</script>
+  
+<body id="page_bg">
+ <!-- login -->  
+   <div id="id01" class="modal">
+    <div class="modal-content animate">
+      <div class="imgcontainer">
+       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/img/profile.png" alt="Avatar" class="avatar">
+    </div>
+  
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" id="uname" required>
+
+       <label for="psw"><b>Password<input type="checkbox" onclick=showPassword() id="pswvi" >visible</b></label>
+      <input type="password" placeholder="Enter Password" id="pwd" required>
+        
+      <button id="loginbtn" type="submit">Login</button>
+      <button id="fblogin" ><i class="fa fa-fw fa-facebook"></i>  Login with Facebook</button>
+      <label>
+        <input type="checkbox" checked="checked" id="remember" > Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="/recover">password?</a></span>
+    </div>
+    </div>
+</div>
+ <!-- signup -->
+   <div id="id02" class="modal">
+  <div class="modal-content" >
+    <div class="container">
+    
+      <h1>Sign Up</span></span> </h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+      <label for="username"><b>User Name</b></label>
+      <input type="text" placeholder="User Name" id="siuname" required>
+      <p id="msg1" class="invalidinput" ><b>Exisiting User!</b></p>
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" id="siem" required>
+      <p id="msg2" class="invalidinput" ><b>Sorry... Email already taken!</b></p>
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" id="sipwd" required>
+
+      <label for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" id="sipwdr" required>
+    
+      <p>By creating an account you agree to our <a id="policy" href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn" id="signbtn">Sign Up</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+  <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+      <div class="container">
+        <img class="logo" src="antiDrug.jpg" alt="">
+        <a class="navbar-brand js-scroll-trigger" href="/index">Anti-drug</a>
+        
+        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            
+           
+            <li class="nav-item mx-0 mx-lg-1" id="siin">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="loginclick"  >Login</a>
+            </li>
+            <li class="nav-item mx-0 mx-lg-1" id="siup">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="signinclick" >Sign up</a>
+            </li>
+            <li class="nav-item mx-0 mx-lg-1" id="siout">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="signOut">Sign out</a>
+            </li>
+           <li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" id="temperature"></a>
+            </li>
+            
+             
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+   
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="js/jqBootstrapValidation.js"></script>
+    <script src="js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="js/freelancer.js"></script>
+  
+<!-- <div w3-include-html="/header"></div>    -->
+<!-- BEGIN CONTENT -->
+<iframe width="100%" height="110" border="0">  </iframe>>
+
+  
+ 
+<h1 class="access">Telephone / Addresses</h1><!-- BEGIN CONTENT --> 
+  <h2>List of Clinics and Health Centres <input  type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by names.." title="Type in a name">  </h2> 
+  <p class="subhd">Methadone Clinics </p> 
+        <p><strong>For enquiry about barrier free access facilities, please contact Access Officer at telephone no. of respective clinic.<br > 
+       
+  <p><strong>Day Clinics<br > Time of operation from 7:00 am to 10:00 pm, Monday to Sunday, including public holidays</strong><br > (Except specified otherwise)</p>
+  <div class="bg-primary">        
+  <p><strong>Hong Kong</strong></p>
+  <table width="100%" border="0" cellspacing="1" cellpadding="3" id="tb01"> 
+   
+   
+    <tr class="table_hd"> 
+     <th class="content" style="width:25%; text-align:left" id="clinic"><strong><span style="color:#000000">Clinic</span></strong></th> 
+     <th class="content" style="width:29%; text-align:left" id="address"><strong><span style="color:#000000">Address</span></strong></th> 
+     <th class="content" style="width:24%;white-space:nowrap; text-align:center" id="time"><strong><span style="color:#000000">Time of Operation</span></strong></th> 
+     <th class="content" style="width:22%; text-align:center" id="tele"><strong><span style="color:#000000">Telephone No.</span></strong></th>
+      <th class="content" style="text-align:center; width:22%" id="bookmark"><strong><span style="color:#000000">Bookmark.</span></strong></th> 
+    </tr>
+     <tbody> 
+    <tr class="table_row_even"> 
+     <td style="width:25%" class="content" headers="clinic" id="fav1item">Eastern Street Methadone Clinic </td> 
+     <td style="width:29%" class="content" headers="address"><br > 45 Eastern Street, Sai Ying Pun<br ><br > </td> 
+     <td align="center" style="width:24%;white-space:nowrap" class="content" headers="time">7:00 am to 3:00 pm</td> 
+     <td style="width:22%" align="center" class="content" headers="tele">2549 5108 </td> 
+      <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav1" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+    </tr> 
+    <tr class="table_row_odd"> 
+     <td style="width:25%" class="content" headers="clinic" id="fav2item">Violet Peel Methadone Clinic </td> 
+     <td style="width:29%" class="content" headers="address"><br > G/F, 2 O'Brien Road, Wan Chai<br > <br > </td> 
+     <td align="center" style="width:24%;white-space:nowrap" class="content" headers="time">&nbsp;</td> 
+     <td style="width:22%" align="center" class="content" headers="tele">2835 1761 </td> 
+      <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav2" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td> 
+    </tr> 
+   </tbody>
+   </table>
+    <p><strong>Kowloon</strong></p>
+    <table width="100%" border="0" cellspacing="1" cellpadding="3" id="tb02">
+    <tbody>
+    <tr class="table_hd"> 
+     <th class="content" id="clinic1" style=" text-align:left; width:25%"><strong><span style="color:#000000">Clinic</span></strong></th> 
+     <th class="content" id="address1" style=" text-align:left; width:29%"><strong><span style="color:#000000">Address</span></strong></th> 
+     <th class="content" style="white-space:nowrap; text-align:center; width:24%" id="time1"><strong><span style="color:#000000">Time of Operation</span></strong></th> 
+     <th class="content" style="text-align:center; width:22%" id="tele1"><strong><span style="color:#000000">Telephone No.</span></strong></th> 
+      <th class="content" style="text-align:center; width:22%" id="bookmark1"><strong><span style="color:#000000">Bookmark.</span></strong></th> 
+      
+    </tr> 
+    <tr class="table_row_even"> 
+     <td class="content" headers="clinic1" id="fav3item">Ho Man Tin Methadone Clinic </td> 
+     <td class="content" headers="address1" ><br > 50 Princess Margaret Road, Ho Man Tin<br > <br > </td> 
+     <td align="center" style="white-space:nowrap" class="content" headers="time1">7:00 am to 3:00 pm</td> 
+     <td align="center" class="content" headers="tele1">2713 6091</td> 
+      <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav3" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+    </tr> 
+    <tr class="table_row_odd"> 
+     <td class="content" headers="clinic1" id="fav4item" >Robert Black Methadone Clinic </td> 
+     <td class="content" headers="address1"><br > Robert Black Health Centre, 600 Prince Edward Road East, San Po Kong<br > <br > </td> 
+     <td align="center" style="white-space:nowrap" class="content" headers="time1">&nbsp;</td> 
+       <td align="center" class="content" headers="tele1">2716 5211 </td> 
+      <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav4" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+    </tr> 
+    <tr class="table_row_even"> 
+     <td style="width:25%" class="content" headers="clinic1" id="fav5item">Sham Shui Po Methadone Clinic </td> 
+     <td style="width:29%" class="content" headers="address1"><br > Sham Shui Po Public Dispensary, 137 Yee Kuk Street, Sham Shui Po<br > <br > </td> 
+     <td align="center" style="width:24%;white-space:nowrap" class="content" headers="time1">&nbsp;</td> 
+     <td align="center" style="width:22%" class="content" headers="tele1">2393 1928 </td> 
+       <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav5" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+    </tr> 
+   </tbody>
+   </table>
+   
+  <p><strong>New Territories and Islands</strong></p>
+  <table width="100%" border="0" cellspacing="1" cellpadding="3" id="tb03">
+  <tbody>
+    <tr class="table_hd"> 
+     <th class="content" id="clinic2" style="text-align:left; width:25%"><strong><span style="color:#000000">Clinic</span></strong></th> 
+     <th class="content" id="address2" style="text-align:left; width:29%"><strong><span style="color:#000000">Address</span></strong></th> 
+     <th class="content" style="white-space:nowrap; text-align:center; width:24%" id="time2"><strong><span style="color:#000000">Time of Operation</span></strong></th> 
+     <th class="content" style="text-align:center; width:22%" id="tele2"><strong><span style="color:#000000">Telephone No.</span></strong></th> 
+      <th class="content" style="text-align:center; width:22%" id="bookmark2"><strong><span style="color:#000000">Bookmark.</span></strong></th> 
+    </tr> 
+    <tr class="table_row_even"> 
+     <td style="width:25%" class="content" headers="clinic2" id="fav6item">Lady Trench Methadone Clinic </td> 
+     <td style="width:29%" class="content" headers="address2"><br > Lady Trench Polyclinic, 213 Sha Tsui Road, Tsuen Wan <br > <br > </td> 
+     <td align="center" style="white-space:nowrap;width:24%" class="content" headers="time2">&nbsp;</td> 
+     <td align="center" style="width:22%" class="content" headers="tele2">2942 6736 </td> 
+     <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav6" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+    </tr> 
+    <tr class="table_row_odd"> 
+     <td style="width:25%" class="content" headers="clinic2" id="fav7item">Cheung Chau Methadone Clinic</td> 
+     <td style="width:29%" class="content" headers="address2"><br > St. John Hospital, Cheung Chau Hospital Road, Cheung Chau <br > <br > </td> 
+     <td align="center" style="white-space:nowrap;width:24%" class="content" headers="time2">1:00 pm to 8:00 pm</td> 
+     <td align="center" style="width:22%" class="content" headers="tele2">2981 5399</td>
+     <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav7" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+    </tr> 
+   </tbody> 
+  </table> 
+</div>
+<p><strong>Evening Clinics<br > Time of operation from 6:00 pm to 10:00 pm, Monday to Sunday, including public holidays</strong><br > (Except specified otherwise)</p> 
+<div class="bg-primary">       
+<p><strong>Hong Kong</strong></p>
+    
+      <table width="100%" border="0" cellspacing="1" cellpadding="3" id="tb04"> 
+       <tbody> 
+      
+        <tr class="table_hd"> 
+         <th class="content" style="width:25%; text-align:left" id="clinic3"><strong><span style="color:#000000">Clinic</span></strong></th> 
+         <th class="content" style="width:29%; text-align:left" id="address3"><strong><span style="color:#000000">Address</span></strong></th> 
+         <th class="content" style="width:24%;white-space:nowrap; text-align:center" id="time3"><strong><span style="color:#000000">Time of Operation</span></strong></th> 
+         <th class="content" style="width:22%; text-align:center" id="tele3"><strong><span style="color:#000000">Telephone No.</span></strong></th>
+          <th class="content" style="text-align:center; width:22%" id="bookmark3"><strong><span style="color:#000000">Bookmark.</span></strong></th> 
+        </tr> 
+        <tr class="table_row_even"> 
+         <td style="width:25%" class="content" headers="clinic3" id="fav8item">Aberdeen Methadone Clinic </td> 
+         <td style="width:29%" class="content" headers="address3"><br > Aberdeen Jockey Club Clinic, 10 Aberdeen Reservoir Road, Aberdeen<br > <br >  </td> 
+         <td align="center" style="width:24%;white-space:nowrap" class="content" headers="time3">&nbsp;</td> 
+         <td style="width:22%" align="center" class="content" headers="tele3">2554 1665 </td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav8" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+       </tr> 
+        <tr class="table_row_odd"> 
+         <td style="width:25%" class="content" headers="clinic3" id="fav9item"> Shau Kei Wan Methadone Clinic <br > </td> 
+         <td style="width:29%" class="content" headers="address3"><br > Shau Kei Wan Jockey Club Clinic, 8 Chai Wan Road, Shau Kei Wan<br > <br >  </td> 
+         <td align="center" style="width:24%;white-space:nowrap" class="content" headers="time3">&nbsp;</td> 
+         <td style="width:22%" align="center" class="content" headers="tele3">2560 0582</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav9" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+       </tbody>
+       </table>
+       
+        <p><strong>Kowloon</strong></p>
+      <table width="100%" border="0" cellspacing="1" cellpadding="3" id="tb05">
+      <tbody>
+        <tr class="table_hd"> 
+         <th class="content" id="clinic4" style="text-align:left; width:25%"><strong><span style="color:#000000">Clinic</span></strong></th> 
+         <th class="content" id="address4" style="text-align:left; width:29%"><strong><span style="color:#000000">Address</span></strong></th> 
+         <th class="content" align="center" style="white-space:nowrap; width:24%" id="time4"><strong><span style="color:#000000">Time of Operation</span></strong></th> 
+         <th class="content" style="text-align:center; width:22%" id="tele4"><strong><span style="color:#000000">Telephone No.</span></strong></th> 
+          <th class="content" style="text-align:center; width:22%" id="bookmark4"><strong><span style="color:#000000">Bookmark.</span></strong></th> 
+        </tr> 
+        <tr class="table_row_odd"> 
+         <td class="content" headers="clinic4" id="fav10item">Hung Hom Methadone Clinic </td> 
+         <td class="content" headers="address4"><br > Hung Hom Clinic, 22 Station Lane, Hung Hom<br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time4">&nbsp;</td> 
+         <td align="center" class="content" headers="tele4">2333 8957 </td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav10" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_even"> 
+         <td class="content" headers="clinic4" id="fav11item">Kwun Tong Methadone Clinic </td> 
+         <td class="content" headers="address4"><br > Kwun Tong Methadone Clinic, 463 Kwun Tong Road, Kwun Tong  <br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time4">&nbsp;</td> 
+         <td align="center" class="content" headers="tele4">2345 7103 </td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav11" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr>         
+        <tr class="table_row_odd"> 
+         <td class="content" headers="clinic4" id="fav12item">Ngau Tau Kok Methadone Clinic </td> 
+         <td class="content" headers="address4"><br > Ngau Tau Kok Jockey Club Clinic, 60 Ting On Street, Ngau Tau Kok <br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time4">&nbsp;</td> 
+         <td align="center" class="content" headers="tele4">2318 0976 </td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav12" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_even"> 
+         <td class="content" headers="clinic4" id="fav13item">Wu York Yu Methadone Clinic </td> 
+         <td class="content" headers="address4"><br > Wu York Yu Health Centre, 55 Sheung Fung Street, Tsz Wan Shan <br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time4">&nbsp;</td> 
+         <td align="center" class="content" headers="tele4">2329 7306</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav13" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_odd"> 
+         <td class="content" headers="clinic4" id="fav14item">Yau Ma Tei Methadone Clinic </td> 
+         <td class="content" headers="address4"><br > Yau Ma Tei Jockey Club Clinic, 143 Battery Street, Yau Ma Tei<br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time4">3:00 pm to 10:00 pm</td> 
+         <td align="center" class="content" headers="tele4">2770 2584</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav14" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+</tbody>
+</table>
+  <p><strong>New Territories and Islands</strong></p>
+<table style="width:100%" border="0" cellspacing="1" cellpadding="3" id="tb06">
+<tbody>
+ <tr class="table_hd"> 
+    <th class="content" id="clinic5" style="text-align:left; width:25%"><strong><span style="color:#000000">Clinic</span></strong></th> 
+         <th class="content" id="address5" style="text-align:left; width:29%"><strong><span style="color:#000000">Address</span></strong></th> 
+         <th class="content" style="white-space:nowrap; text-align:center; width:24%" id="time5"><strong><span style="color:#000000">Time of Operation</span></strong></th> 
+         <th class="content" style="text-align:center; width:22%" id="tele5"><strong><span style="color:#000000">Telephone No.</span></strong></th> 
+   <th class="content" style="text-align:center; width:22%" id="bookmark5"><strong><span style="color:#000000">Bookmark.</span></strong></th> 
+        </tr> 
+        <tr class="table_row_even"> 
+         <td style="width:25%" class="content" headers="clinic5" id="fav15item">Sha Tin (Tai Wai) Methadone Clinic</td> 
+         <td style="width:29%" class="content" headers="address5"><br > Sha Tin (Tai Wai) Clinic, 2 Man Lai Road, Tai Wai, Sha Tin <br > <br > </td> 
+         <td style="white-space:nowrap;width:24%; text-align:center" class="content" headers="time5">&nbsp;</td> 
+         <td style="width:22%; text-align:center" class="content" headers="tele5">2604 5355 </td>
+         <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav15" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_odd"> 
+         <td style="width:25%" class="content" headers="clinic5" id="fav16item">Shek Wu Hui Methadone Clinic</td> 
+         <td style="width:29%" class="content" headers="address5"><br > Shek Wu Hui Jockey Club Clinic, 108 Jockey Club Road, Sheung Shui <br > <br > </td> 
+         <td style="white-space:nowrap;width:24%; text-align:center" class="content" headers="time5">&nbsp;</td> 
+         <td align="center" style="width:22%" class="content" headers="tele5">2671 9484</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav16" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_even"> 
+         <td class="content" headers="clinic5" id="fav17item">Tai Po Methadone Clinic </td> 
+         <td class="content" headers="address5"><br > Tai Po Jockey Club Clinic, 37 Ting Kok Road, Tai Po<br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time5">&nbsp;</td> 
+         <td align="center" class="content" headers="tele5">2664 5020</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav17" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_odd"> 
+         <td class="content" headers="clinic5" id="fav18item">Tuen Mun Methadone Clinic </td> 
+         <td class="content" headers="address5"><br > Tuen Mun Clinic, 11 Tsing Yin Street, Tuen Mun <br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time5">3:00 pm to 10:00 pm</td> 
+         <td align="center" class="content" headers="tele5">2452 9113</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav18" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+        <tr class="table_row_even"> 
+         <td class="content" headers="clinic5" id="fav19item">Yuen Long Methadone Clinic </td> 
+         <td class="content" headers="address5"><br > Yuen Long Jockey Club Health Centre, 269 Castle Peak Road, Yuen Long <br > <br > </td> 
+         <td align="center" style="white-space:nowrap" class="content" headers="time5">&nbsp;</td> 
+         <td align="center" class="content" headers="tele5">2470 9307</td> 
+          <td style="width:22%; text-align:center" class="content" headers="bookmark"><i id="fav19" class="fa fa-star-o" style="font-size:36px;color:dark"></i></i></p> </td>
+        </tr> 
+       </tbody> 
+      </table> 
+  <!-- END CONTENT --> 
+ <!-- END CONTENT -->
+</div>
+    	
+  
+</body>
+
+</html>
